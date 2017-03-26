@@ -62,10 +62,17 @@ class Spider(scrapy.Spider):
         deals = response.meta['deals']
         post['TAB_QuerySubmitPagerData'] = str(page)
         if page == 1:
-            num_page = selector.xpath('//td[@class="pager"]/text()').extract()
-            num_page = int(re.findall('[0-9]+',num_page[0])[0])
-            period = response.meta['period']
-            print('------ There are %s pages in %s ------' % (num_page,period[:-1]))
+            try:
+                num_page = selector.xpath('//td[@class="pager"]/text()').extract()
+                num_page = int(re.findall('[0-9]+',num_page[0])[0])
+                period = response.meta['period']
+                print('------ There are %s pages in %s ------' % (num_page,period[:-1]))
+            except Exception:
+                print('------ Error Miss %s ------' % period[:-1])
+                num_page = response.meta['num_page']
+                yield FormRequest(baseurl, formdata = post,
+                    meta = {'post_date':period, 'baseurl':baseurl, 'page':page,'num_page':num_page, 'period':period, 'deals': deals}, callback = self.parse0, dont_filter = True)
+
         else:
             num_page = response.meta['num_page']
         page += 1
