@@ -152,19 +152,13 @@ class Spider(scrapy.Spider):
         deal_date = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r21_c4_ctrl"]/text()').extract()
         DealItems['deal_date'] = returnItem(deal_date)
         P_start_date = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r22_c2_ctrl"]/text()').extract()
-        DealItems['P_start_date'] = P_start_date
+        DealItems['P_start_date'] = returnItem(P_start_date)
         P_end_date = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r22_c4_ctrl"]/text()').extract()
         DealItems['P_end_date'] = returnItem(P_end_date)
         A_start = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r10_c2_ctrl"]/text()').extract()
-        if A_start:
-            DealItems['A_start_date'] = A_start[0]
-        else:
-            DealItems['A_start_date'] = 'Nah'
+        DealItems['A_start_date'] = returnItem(A_start)
         A_end = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r10_c4_ctrl"]/text()').extract()
-        if A_end:
-            DealItems['A_end_date'] = A_end[0]
-        else:
-            DealItems['A_end_date'] = 'Nah'
+        DealItems['A_end_date'] = returnItem(A_end)
         Ratify= selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r14_c2_ctrl"]/text()').extract()
         DealItems['Ratify'] = returnItem(Ratify)
         DealItems['Contract_date'] =  selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r14_c4_ctrl"]/text()')[0].extract()
