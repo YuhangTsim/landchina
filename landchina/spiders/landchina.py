@@ -102,9 +102,12 @@ class Spider(scrapy.Spider):
         DealItems = DealItem()
         Dist = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r1_c2_ctrl"]/text()').extract()
         DealItems['Dist'] = returnItem(Dist)
-        DealItems['E_ID'] = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r1_c4_ctrl"]/text()')[0].extract()
-        DealItems['Project_Name'] = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r17_c2_ctrl"]/text()')[0].extract()
-        DealItems['Project_where'] = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r16_c2_ctrl"]/text()')[0].extract()
+        E_ID = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r1_c4_ctrl"]/text()').extract()
+        DealItems['E_ID'] = returnItem(E_ID)
+        Project_Name = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r17_c2_ctrl"]/text()').extract()
+        DealItems['Project_Name'] = returnItem(Project_Name)
+        Project_where = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r16_c2_ctrl"]/text()').extract()
+        DealItems['Project_where'] = returnItem(Project_where)
         Area = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r2_c2_ctrl"]/text()').extract()
         DealItems['Area'] = returnItem(Area)
         Source = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r2_c4_ctrl"]/text()').extract()
@@ -115,12 +118,16 @@ class Spider(scrapy.Spider):
             DealItems['Source'] = "新增建设用地"
         else:
             DealItems['Source'] = "新增建设用地(来自存量库)"
-        DealItems['Usage'] = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r3_c2_ctrl"]/text()')[0].extract()
-        DealItems['Provide_Method'] = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r3_c4_ctrl"]/text()')[0].extract()
+        Usage = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r3_c2_ctrl"]/text()').extract()
+        DealItems['Usage'] = returnItem(Usage)
+        Provide_Method = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r3_c4_ctrl"]/text()').extract()
+        DealItems['Provide_Method'] = returnItem(Provide_Method)
         expiry_date = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r19_c2_ctrl"]/text()').extract()
         DealItems['expiry_date'] = returnItem(expiry_date)
-        DealItems['category'] =selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r19_c4_ctrl"]/text()')[0].extract()
-        DealItems['rank'] = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r20_c2_ctrl"]/text()')[0].extract()
+        category = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r19_c4_ctrl"]/text()').extract()
+        DealItems['category'] = returnItem(category)
+        rank = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r20_c2_ctrl"]/text()').extract()
+        DealItems['rank'] = returnItem(rank)
         price = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r20_c4_ctrl"]/text()').extract()
         DealItems['price'] = returnItem(price)
         table_len = len(selector.xpath('//table[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f3"]/tbody/tr').extract())-3
@@ -168,6 +175,7 @@ class Spider(scrapy.Spider):
         DealItems['A_end_date'] = returnItem(A_end)
         Ratify= selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r14_c2_ctrl"]/text()').extract()
         DealItems['Ratify'] = returnItem(Ratify)
-        DealItems['Contract_date'] =  selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r14_c4_ctrl"]/text()')[0].extract()
+        Contract_date =  selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r14_c4_ctrl"]/text()').extract()
+        DealItems['Contract_date'] = returnItem(Contract_date)
 
         yield DealItems
