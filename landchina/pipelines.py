@@ -27,7 +27,7 @@ class LandchinaPipeline(object):
 
 
 
-XLS_FILE_DIR = 'results'
+XLS_FILE_DIR = os.path.dirname(os.path.abspath("__file__"))+r'/landchina/results'
 
 
 class SaveExcelPipeline(object):
@@ -62,36 +62,35 @@ class SaveExcelPipeline(object):
         xls = xlwt.Workbook()
         sheet = xls.add_sheet('sheet1', cell_overwrite_ok=True)
         sheet.write(0, 0, '所在地')
-        sheet.write(0, 1, '所在地区划码')
-        sheet.write(0, 2, '上级所在地')
-        sheet.write(0, 3, '上级区划码')
-        sheet.write(0, 4, '行政区')
-        sheet.write(0, 5, '项目名称')
-        sheet.write(0, 6, '项目位置')
-        sheet.write(0, 7, '面积(公顷)')
-        sheet.write(0, 8, '土地来源')
-        sheet.write(0, 9, '土地用途')
-        sheet.write(0, 10, '供地方式')
-        sheet.write(0, 11, '土地使用年限')
-        sheet.write(0, 12, '行业分类')
-        sheet.write(0, 13, '土地级别')
-        sheet.write(0, 14, '成交价格(万元)')
-        sheet.write(0, 15, '土地使用权人')
-        sheet.write(0, 16, '下限')
-        sheet.write(0, 17, '上限')
-        sheet.write(0, 18, '约定交地时间')
-        sheet.write(0, 19, '约定开工时间')
-        sheet.write(0, 20, '约定竣工时间')
-        sheet.write(0, 21, '合同签订日期')
+        sheet.write(0, 1, '电子监管号')
+        sheet.write(0, 2, '项目名称')
+        sheet.write(0, 3, '项目位置')
+        sheet.write(0, 4, '面积(公顷)')
+        sheet.write(0, 5, '土地来源')
+        sheet.write(0, 6, '土地用途')
+        sheet.write(0, 7, '供地方式')
+        sheet.write(0, 8, '土地使用年限')
+        sheet.write(0, 9, '行业分类')
+        sheet.write(0, 10, '土地级别')
+        sheet.write(0, 11, '成交价格(万元)')
+        sheet.write(0, 12, '土地使用权人')
+        sheet.write(0, 13, '约定交地时间')
+        sheet.write(0, 14, '约定开工时间')
+        sheet.write(0, 15, '约定竣工时间')
+        sheet.write(0, 16, '实际开工时间')
+        sheet.write(0, 17, '实际竣工时间')
+        sheet.write(0, 18, '批准单位')
+        sheet.write(0, 19, '合同签订日期')
         xls.save(os.path.join(XLS_FILE_DIR, filename + '.xls'))
         self.handlers.append(xls)
         self.file_mapper[filename] = len(self.handlers) - 1
 
     def process_item(self, item, spider):
-        date = item['deal_date']
+        date = item['Contract_date']
+        cate = item['Usage']
         r = re.compile('[0-9]\d*年[0-9]\d*月')
         date = re.search(r, date).group(0)
-        filename = '-'.join([date])
+        filename = '-'.join([date,cate])
         self.save_to_file(filename, item)
         return item
 
@@ -112,14 +111,12 @@ class SaveExcelPipeline(object):
         sheet.write(row, 9, item['category'])
         sheet.write(row, 10, item['rank'])
         sheet.write(row, 11, item['price'])
-        sheet.write(row, 12, item['payment'])
-        sheet.write(row, 13, item['use_right_owner'])
-        sheet.write(row, 14, item['FAR'])
-        sheet.write(row, 15, item['deal_date'])
-        sheet.write(row, 16, item['P_start_date'])
-        sheet.write(row, 17, item['P_end_date'])
-        sheet.write(row, 18, item['A_start_date'])
-        sheet.write(row, 19, item['A_end_date'])
-        sheet.write(row, 20, item['Ratify'])
-        sheet.write(row, 21, item['Contract_date'])
+        sheet.write(row, 12, item['use_right_owner'])
+        sheet.write(row, 13, item['deal_date'])
+        sheet.write(row, 14, item['P_start_date'])
+        sheet.write(row, 15, item['P_end_date'])
+        sheet.write(row, 16, item['A_start_date'])
+        sheet.write(row, 17, item['A_end_date'])
+        sheet.write(row, 18, item['Ratify'])
+        sheet.write(row, 19, item['Contract_date'])
         xls.save(os.path.join(XLS_FILE_DIR, filename + '.xls'))
