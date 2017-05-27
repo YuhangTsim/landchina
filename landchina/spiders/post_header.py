@@ -128,4 +128,7 @@ Cate = {'批发零售用地':'051',
 
 post_data = (get_post_data(baseurl, headers))
 date_data = '9f2c3acd-0256-4da2-a659-6949c4671a2a:'
-cate = 'ec9f9d83-914e-4c57-8c8d-2c57185e912a:'+Cate[category]+'~'+category
+if category is not '':
+    cate = 'ec9f9d83-914e-4c57-8c8d-2c57185e912a:'+Cate[category]+'~'+category
+else:
+    cate = ''

@@ -13,4 +13,4 @@ delta = timedelta(3)
 end_date = datetime(2007,2,5)
 
 ''' 设置土地用途'''
-category = '工业用地'
+category = ''

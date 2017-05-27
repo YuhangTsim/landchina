@@ -81,6 +81,9 @@ class SaveExcelPipeline(object):
         sheet.write(0, 17, '实际竣工时间')
         sheet.write(0, 18, '批准单位')
         sheet.write(0, 19, '合同签订日期')
+        sheet.write(0, 20, '容积率上限')
+        sheet.write(0, 21, '容积率下限')
+        sheet.write(0, 22, '支付约定')
         xls.save(os.path.join(XLS_FILE_DIR, filename + '.xls'))
         self.handlers.append(xls)
         self.file_mapper[filename] = len(self.handlers) - 1
@@ -90,7 +93,7 @@ class SaveExcelPipeline(object):
         cate = item['Usage']
         r = re.compile('[0-9]\d*年[0-9]\d*月')
         date = re.search(r, date).group(0)
-        filename = '-'.join([date,cate])
+        filename = '-'.join([date])
         self.save_to_file(filename, item)
         return item
 
@@ -119,4 +122,7 @@ class SaveExcelPipeline(object):
         sheet.write(row, 17, item['A_end_date'])
         sheet.write(row, 18, item['Ratify'])
         sheet.write(row, 19, item['Contract_date'])
+        sheet.write(row, 20, item['FAR_max'])
+        sheet.write(row, 21, item['FAR_min'])
+        sheet.write(row, 22, item['payment'])
         xls.save(os.path.join(XLS_FILE_DIR, filename + '.xls'))

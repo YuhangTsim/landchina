@@ -29,7 +29,8 @@ class DealItem(scrapy.Item):
     price = scrapy.Field() # 成交价格
     payment = scrapy.Field() # 分期支付约定
     use_right_owner = scrapy.Field() # 土地使用权人
-    FAR = scrapy.Field() # 容积率
+    FAR_min = scrapy.Field() # 容积率最小值
+    FAR_max = scrapy.Field() # 容积率最大值
     deal_date = scrapy.Field() # 约定交地日期
     P_start_date = scrapy.Field() # 约定开工时间
     P_end_date = scrapy.Field() # 约定竣工时间

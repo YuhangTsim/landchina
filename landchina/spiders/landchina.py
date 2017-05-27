@@ -39,7 +39,7 @@ class Spider(scrapy.Spider):
             print(start_time)
             period = makepost(start_time, end_time)
             start_time, end_time = next_period(start_time, end_time)
-            post_filter = date_data + period +cate
+            post_filter = date_data + period + cate
             post['TAB_QuerySubmitConditionData'] = post_filter
             page = 1
             num_page = 1
@@ -146,10 +146,11 @@ class Spider(scrapy.Spider):
                     YD['备注'] = BZ[0]
                 else:
                     YD['备注'] = 'Nah'
+                YD = '/'.join(list(YD.values()))
             else:
-                YD = 'Nah'
+                YD = ['Nah']
             ZFYD.append(YD)
-        # DealItems['payment'] = ZFYD
+        DealItems['payment'] = ','.join(ZFYD)
         use_right_owner = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r9_c2_ctrl"]/text()').extract()
         DealItems['use_right_owner'] = returnItem(use_right_owner)
         Min = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f2_r1_c2_ctrl"]/text()').extract()
@@ -162,7 +163,8 @@ class Spider(scrapy.Spider):
             Max = Max[0]
         else:
             Max = 'Nah'
-        # DealItems['FAR'] = [{'Min': Min}, {'Max': Max}]
+        DealItems['FAR_max'] = Max
+        DealItems['FAR_min'] = Min
         deal_date = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r21_c4_ctrl"]/text()').extract()
         DealItems['deal_date'] = returnItem(deal_date)
         P_start_date = selector.xpath('//span[@id="mainModuleContainer_1855_1856_ctl00_ctl00_p1_f1_r22_c2_ctrl"]/text()').extract()
